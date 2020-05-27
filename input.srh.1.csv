@@ -1,0 +1,12 @@
+Basic statistics,Global constants (default)
+STI prevalence,0.05
+Pregnancies that end in miscarriage or unsafe abortion,0.15
+Still births,0.02
+Pregnant women who will experience complications,0.15
+Newborns who will experience complications,0.2
+"Newborns weighing less than 2,500 g",0.05
+Pregnant women who will have access to a health center,0.15
+Women who will need suturing of vaginal tears,0.15
+Deliveries requiring a C-section (min),0.05
+Deliveries requiring a C-section (max),0.15
+Maternal deaths averted if all women have access to EmOC services,1
