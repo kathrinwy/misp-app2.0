@@ -72,15 +72,18 @@ shinyUI(navbarPage(
            
            fluidRow(
              
-             column(2,style='padding-left:50px',
-                    br(),
-                    br(),
-                    downloadButton("downloadResults", "Download results")),
-             
-             column(10,
+             column(6, style='padding-left:50px',
                     tags$h1("Results"), 
-                    tags$h4("Demographic Indicators"),  rHandsontableOutput("table4"),
+                    tags$h4("Demographic Indicators"),  rHandsontableOutput("table4")),
+             column(6,
                     br(),
+                    br(),
+                    downloadButton("downloadResults", "Download results"))
+           ),
+           
+           fluidRow(
+             
+             column(12, style='padding-left:50px',
                     tags$h4("Maternal and Newborn Health"),  rHandsontableOutput("table5"),
                     br(),
                     tags$h4("Access to Sexual and Reproductive Health"),  rHandsontableOutput("table6")),
