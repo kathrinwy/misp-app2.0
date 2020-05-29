@@ -27,7 +27,7 @@ shinyUI(navbarPage(
   
   "MISP Calculator 2.0 2020 Version", 
   
-  tabPanel("Input Data",
+  tabPanel("Input Data for MISP Calculations",
            
            fluidRow(
              
@@ -68,14 +68,14 @@ shinyUI(navbarPage(
                     br(),
                     br()))),
   
-  tabPanel("MISP Calculations", 
+  tabPanel("MISP Calculations based on your input data", 
            
            fluidRow(
              
-             column(6, style='padding-left:50px',
+             column(10, style='padding-left:50px',
                     tags$h1("Results"), 
                     tags$h4("Demographic Indicators"),  rHandsontableOutput("table4")),
-             column(6,
+             column(2,
                     br(),
                     br(),
                     downloadButton("downloadResults", "Download results"))
@@ -83,7 +83,7 @@ shinyUI(navbarPage(
            
            fluidRow(
              
-             column(12, style='padding-left:50px',
+             column(10, style='padding-left:50px',
                     tags$h4("Maternal and Newborn Health"),  rHandsontableOutput("table5"),
                     br(),
                     tags$h4("Access to Sexual and Reproductive Health"),  rHandsontableOutput("table6")),

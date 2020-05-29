@@ -64,7 +64,7 @@ shinyServer(function(input, output) {
     td.style.background = 'lightgreen';
     }"
     
-    rhandsontable(input.dem.1, rowHeaderWidth = 250, colHeaders = c("Global constants", "Country data", "Site specific")) %>%
+    rhandsontable(input.dem.1, rowHeaderWidth = 450, colHeaders = c("Global constants", "Country data", "Site specific")) %>%
       hot_col("Site specific", width = 100, valign = "htCenter", renderer = color_renderer) %>%
       hot_col("Country data", width = 100, readOnly = TRUE, valign = "htCenter") %>%
       hot_col("Global constants", width = 100, readOnly = TRUE, valign = "htCenter") %>%
@@ -85,7 +85,7 @@ shinyServer(function(input, output) {
     Handsontable.renderers.TextRenderer.apply(this, arguments);
     td.style.background = 'lightgreen';}"
     
-    rhandsontable(input.dem.2, rowHeaderWidth = 250, colHeaders = NULL) %>%
+    rhandsontable(input.dem.2, rowHeaderWidth = 450, colHeaders = NULL) %>%
       hot_col(3, width = 100, valign = "htCenter", renderer = color_renderer) %>%
       hot_col(2, width = 100, readOnly = TRUE, valign = "htCenter") %>%
       hot_col(1, width = 100, readOnly = TRUE, valign = "htCenter")%>%
@@ -148,7 +148,7 @@ shinyServer(function(input, output) {
                                   "# of live births in the next month",
                                   "# of pregnant women")
     
-    rhandsontable(output.table1, rowHeaderWidth = 250, colHeaders = c("Global constants", "Country data", "Site specific")) %>%
+    rhandsontable(output.table1, rowHeaderWidth = 450, colHeaders = c("Global constants", "Country data", "Site specific")) %>%
       hot_col(3, width = 100, readOnly = TRUE, valign = "htCenter") %>%
       hot_col(2, width = 100, readOnly = TRUE, valign = "htCenter") %>%
       hot_col(1, width = 100, readOnly = TRUE, valign = "htCenter")
