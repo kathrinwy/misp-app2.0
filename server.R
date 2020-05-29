@@ -149,9 +149,9 @@ shinyServer(function(input, output) {
                                   "# of pregnant women")
     
     rhandsontable(output.table1, rowHeaderWidth = 450, colHeaders = c("Global constants", "Country data", "Site specific")) %>%
-      hot_col(3, width = 100, readOnly = TRUE, valign = "htCenter") %>%
-      hot_col(2, width = 100, readOnly = TRUE, valign = "htCenter") %>%
-      hot_col(1, width = 100, readOnly = TRUE, valign = "htCenter")
+      hot_col(3, width = 200, readOnly = TRUE, valign = "htCenter") %>%
+      hot_col(2, width = 200, readOnly = TRUE, valign = "htCenter") %>%
+      hot_col(1, width = 200, readOnly = TRUE, valign = "htCenter")
     
     
   })
