@@ -57,7 +57,7 @@ shinyUI(navbarPage(
                     
                     downloadButton("downloadData", "Download your input data"), downloadButton("downloadDatafull", "Download full dataset")),
              
-             column(6,
+             column(9,
                     
                     tags$h1("Input data"),
                     tags$h4("Demographic Indicators"),  rHandsontableOutput("table1.1"), rHandsontableOutput("table1.2"),
@@ -66,28 +66,25 @@ shinyUI(navbarPage(
                     br(),
                     tags$h4("Access to Sexual and Reproductive Health"),  rHandsontableOutput("table3.1"),  rHandsontableOutput("table3.2"),
                     br(),
-                    br()
-                    
-             ))),
+                    br()))),
   
   tabPanel("MISP Calculations", 
            
            fluidRow(
-             column(8,style='padding-left:150px',
-                    
+             
+             column(2,style='padding-left:50px',
+                    br(),
+                    br(),
+                    downloadButton("downloadResults", "Download results")),
+             
+             column(10,
                     tags$h1("Results"), 
                     tags$h4("Demographic Indicators"),  rHandsontableOutput("table4"),
                     br(),
                     tags$h4("Maternal and Newborn Health"),  rHandsontableOutput("table5"),
                     br(),
                     tags$h4("Access to Sexual and Reproductive Health"),  rHandsontableOutput("table6")),
-             
-             column(2,
-                    br(),
-                    br(),
-                    downloadButton("downloadResults", "Download results")),
-             br()
-           )),
+             br())),
   
   tabPanel("Sources", style='padding-left:50px',
            tags$h1("Sources"),
