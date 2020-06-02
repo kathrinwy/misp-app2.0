@@ -53,18 +53,21 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
   
   tabPanel("Input Data for MISP Calculations",
            
-           fluidRow(
+           fluidRow(style='padding-left:50px',
              
              br(),
-             
-             column(3,style='padding-left:50px',
-                    
                     tags$head(
-                      tags$style(".btn { vertical-align: middle; height: 50px; width: 75%; font-size: 18px;}"
+                      tags$style(".btn { vertical-align: middle; height: 50px; width: 35%; font-size: 18px;}"
                       )),
                     
                     tags$h1("Selections"),
+             
+             br(),
+             
+             p("In this tab you can enter all required inputs ot your MISP calculations, such as the", strong("Country"),
+             "you work in or", strong("Number of affected persons"), "depending on your context."),
                     
+             br(),
                     selectInput("country", 
                                 label = "Choose a country",
                                 choices = data.misp$country,
@@ -74,59 +77,78 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
                                  label = "Number of affected persons", 
                                  value = 100000), 
                     
-                    strong("Global constants"),"are averages, calculated based on the best-available data.", 
-                    strong("Country specific"), "data have been loaded from our database based on the country you select. 
-      You can enter", strong("site-specific data"), "in the green fields.",
-                    
                     br(),
-                    br(),
-                    p("You can download your input data (whatever you see on this screen) as well as the full database running in the background below:"), 
-                    
-                    br(),
-                    
-                    downloadButton("downloadData", "Download your input data"), 
-                    
-                    br(),
-                    br(),
-                    
-                    downloadButton("downloadDatafull", "Download full dataset"),
-                    
-                    br(),
-                    br(),
-                    
-                    tags$em("Last database update: June 2020")),
-             
-             column(9,
-                    
+
                     tags$h1("Input Data for MISP Calculator"),
+                    
+             br(),
+             
+                    p("Here, we will determine the input data for the MISP Calculator through", strong("Global constants"), ",", strong("Country-specific"), "or", strong("Site specific"), "inputs"),
+                    p(strong("Global constants"),"are averages, calculated based on the best-available data.", 
+                    strong("Country specific"), "data have been loaded from our database based on the country you select."), 
+                    p("You can enter", strong("site-specific data"), "in the green fields."),
+                    
+             br(),
+             
                     tags$h4("Demographic Indicators"),  rHandsontableOutput("table1.1"), rHandsontableOutput("table1.2"),
                     br(),
                     tags$h4("Maternal and Newborn Health"),  rHandsontableOutput("table2.1"), rHandsontableOutput("table2.2"),
                     br(),
                     tags$h4("Access to Sexual and Reproductive Health"),  rHandsontableOutput("table3.1"),  rHandsontableOutput("table3.2"),
-                    br(),
-                    br()))),
+             br(),
+             br(),
+             
+             p("You can download your input data (whatever you see on this screen) as well as the full database running in the background below:"), 
+             
+             downloadButton("downloadData", "Download your input data"), 
+             
+             br(),
+             br(),
+             
+             downloadButton("downloadDatafull", "Download full dataset"),
+             
+             br(),
+             br(),
+             
+             tags$em("Last database update: June 2020"),
+             
+             br(),
+             br()
+             
+                    )),
   
   tabPanel("MISP Calculations based on input data", 
            
-           fluidRow(
+           fluidRow(style='padding-left:50px',
              
-             column(8, style='padding-left:50px',
-                    tags$h1("Results"), 
-                    tags$h4("Demographic Indicators"),  rHandsontableOutput("table4")),
-             column(4,
+                    tags$h1("Results"),
+                    
                     br(),
+                    
+                    p("In this tab, you can view and download the MISP Calculations, based on the inputs you made in the previous tab."),
+                    
                     br(),
-                    downloadButton("downloadResults", "Download results"))
-           ),
+                    
+                    tags$h4("Demographic Indicators"),  
+                    rHandsontableOutput("table4"),
+       
+                    br(),
+
+                    tags$h4("Maternal and Newborn Health"),  
+                    rHandsontableOutput("table5"),
+                    br(),
+                    tags$h4("Access to Sexual and Reproductive Health"),  
+                    rHandsontableOutput("table6"),
+             br(),
+             br(),
            
-           fluidRow(
-             
-             column(12, style='padding-left:50px',
-                    tags$h4("Maternal and Newborn Health"),  rHandsontableOutput("table5"),
-                    br(),
-                    tags$h4("Access to Sexual and Reproductive Health"),  rHandsontableOutput("table6")),
-             br())),
+           p("Download your resuts by clicking on the button below"),
+           downloadButton("downloadResults", "Download results")),
+           
+           br(),
+           br()
+           
+           ),
   
   tabPanel("Sources & Support", style='padding-left:50px',
            
