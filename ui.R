@@ -8,6 +8,8 @@ library(tidyverse)
 library(readxl)
 library(rhandsontable)
 library(DT)
+library(shinythemes)
+
 
 data.misp     <- read.csv("data.misp.2020.csv")
 data.misp.tbl1 <- data.misp[c("country", "wra", "t.18.up", "f.10.14", "f.10.19", "t.10.24", "m.18.up", "cbr", "sti", "nnmr", "mmr")]
@@ -22,10 +24,32 @@ input.srh.2 <- read.csv("input.srh.2.csv")
 input.fp.1 <- read.csv("input.fp.1.csv")
 input.fp.2 <- read.csv("input.fp.2.csv")
 
+
 # Define UI for application that draws a histogram
-shinyUI(navbarPage(
+shinyUI <- fluidPage(theme = shinytheme("flatly"),
   
-  "MISP Calculator 2.0 2020 Version", 
+ # list(
+                 
+                 #tags$style(
+
+    #  '.navbar-default .navbar-brand { color: #FFFFF0; 
+     #                                 font-size: 44px; 
+      #                                background-color: #000080;}', 
+                                      
+      #'.navbar-nav > li > a, .navbar-brand {
+       #            padding-top:35px !important; 
+        #           padding-bottom:45px !important;
+         #          height: 45px;
+    #  }',
+                 
+     # '.navbar {min-height:45px !important;}'
+
+ #)),
+ 
+ 
+
+  navbarPage("MISP Calculator 2.0",
+
   
   tabPanel("Input Data for MISP Calculations",
            
@@ -35,7 +59,12 @@ shinyUI(navbarPage(
              
              column(3,style='padding-left:50px',
                     
+                    tags$head(
+                      tags$style(".btn { vertical-align: middle; height: 50px; width: 75%; font-size: 18px;}"
+                      )),
+                    
                     tags$h1("Selections"),
+                    
                     selectInput("country", 
                                 label = "Choose a country",
                                 choices = data.misp$country,
@@ -55,11 +84,21 @@ shinyUI(navbarPage(
                     
                     br(),
                     
-                    downloadButton("downloadData", "Download your input data"), downloadButton("downloadDatafull", "Download full dataset")),
+                    downloadButton("downloadData", "Download your input data"), 
+                    
+                    br(),
+                    br(),
+                    
+                    downloadButton("downloadDatafull", "Download full dataset"),
+                    
+                    br(),
+                    br(),
+                    
+                    tags$em("Last database update: June 2020")),
              
              column(9,
                     
-                    tags$h1("Input data"),
+                    tags$h1("Input Data for MISP Calculator"),
                     tags$h4("Demographic Indicators"),  rHandsontableOutput("table1.1"), rHandsontableOutput("table1.2"),
                     br(),
                     tags$h4("Maternal and Newborn Health"),  rHandsontableOutput("table2.1"), rHandsontableOutput("table2.2"),
@@ -68,14 +107,14 @@ shinyUI(navbarPage(
                     br(),
                     br()))),
   
-  tabPanel("MISP Calculations based on your input data", 
+  tabPanel("MISP Calculations based on input data", 
            
            fluidRow(
              
-             column(6, style='padding-left:50px',
+             column(8, style='padding-left:50px',
                     tags$h1("Results"), 
                     tags$h4("Demographic Indicators"),  rHandsontableOutput("table4")),
-             column(6,
+             column(4,
                     br(),
                     br(),
                     downloadButton("downloadResults", "Download results"))
@@ -89,7 +128,9 @@ shinyUI(navbarPage(
                     tags$h4("Access to Sexual and Reproductive Health"),  rHandsontableOutput("table6")),
              br())),
   
-  tabPanel("Sources", style='padding-left:50px',
+  tabPanel("Sources & Support", style='padding-left:50px',
+           
+           column(6,
            tags$h1("Sources"),
            br(),
            tags$h4("Demographic indicators"),
@@ -111,5 +152,12 @@ shinyUI(navbarPage(
            p("Trends in Maternal Mortality: 2000 to 2017, WHO, UNICEF, UNFPA, World Bank Group, UNFPA, 2019, accessible", tags$a(href="https://www.who.int/reproductivehealth/publications/maternal-mortality-2000-2017/en/", "here")),
            br(),
            tags$h4("Abortion laws"),
-           p("Center for Reproductive Rights, The World's Abortion Laws, 2019, accessible", tags$a(href="https://reproductiverights.org/worldabortionlaws", "here"))
-  )))
+           p("Center for Reproductive Rights, The World's Abortion Laws, 2019, accessible", tags$a(href="https://reproductiverights.org/worldabortionlaws", "here"))),
+          
+            column(6,
+           tags$h1("Shiny app support"),
+           br(),
+           p("If you have questions regarind the usage of the MISP Caluclator, 
+             please contact XXXXXX XXXXXXX. For questions regaring calculations and underlying data, 
+             please reach out to xxxxx xxxx.")
+           ))))
