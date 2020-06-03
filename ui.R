@@ -64,8 +64,8 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
              
              br(),
              
-             p("In this tab you can enter all required inputs ot your MISP calculations, such as the", strong("Country"),
-             "you work in or", strong("Number of affected persons"), "depending on your context."),
+             p("In this tab you can enter all required inputs for your MISP calculations, such as the", strong("Country"),
+             "you work in or the", strong("Number of affected persons"), "in your context."),
                     
              br(),
                     selectInput("country", 
@@ -83,10 +83,10 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
                     
              br(),
              
-                    p("Here, we will determine the input data for the MISP Calculator through", strong("Global constants"), ",", strong("Country-specific"), "or", strong("Site specific"), "inputs"),
-                    p(strong("Global constants"),"are averages, calculated based on the best-available data.", 
-                    strong("Country specific"), "data have been loaded from our database based on the country you select."), 
-                    p("You can enter", strong("site-specific data"), "in the green fields."),
+                    p("This section lays out the input data for the MISP Calculator through", strong("Global constants"), ",", strong("Country-specific"), "or", strong("Site specific"), "inputs."),
+                    p(strong("Global constants"),"are determined based on expert group assessments of low- and middle-income countries and/or humanitarian and fragile countries' averages.", 
+                    strong("Country specific"), "data are drawn from our database based on the country you selected earlier."), 
+                    p("You can enter", strong("site-specific data"), "in the green fields if more precise information is available to you."),
                     
              br(),
              
@@ -125,8 +125,9 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
                     
                     br(),
                     
-                    p("In this tab, you can view and download the MISP Calculations, based on the inputs you made in the previous tab."),
-                    
+                    p("In this tab, you can view and download the MISP Calculations, based on the inputs in the previous tab."),
+                    p("Again, estimates are available base on either", strong("Global constants, Country data"), "or", strong("site specific"), 
+                      "inputs you may have provided."),
                     br(),
                     
                     tags$h4("Demographic Indicators"),  
@@ -177,9 +178,8 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
            p("Center for Reproductive Rights, The World's Abortion Laws, 2019, accessible", tags$a(href="https://reproductiverights.org/worldabortionlaws", "here"))),
           
             column(6,
-           tags$h1("Shiny app support"),
+           tags$h1("MISP Calculator 2.0 app support"),
            br(),
-           p("If you have questions regarind the usage of the MISP Caluclator, 
-             please contact XXXXXX XXXXXXX. For questions regaring calculations and underlying data, 
-             please reach out to xxxxx xxxx.")
+           p("If you have questions regarding the implemenation of the MISP would like to provide feedback regaring the usage of the MISP Calculator app, please contact XYZ XYZ. 
+           For questions regaring calculations and underlying data, please reach out to xxxxx xxxx.")
            ))))
