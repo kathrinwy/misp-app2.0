@@ -747,7 +747,7 @@ shinyServer(function(input, output) {
     
     
     filename = function() {
-      paste0(input$country, Sys.Date(), ".csv")
+      paste0(input$country, Sys.Date(), "-input-data.csv")
     },
     
     content = function(file) {
@@ -804,7 +804,7 @@ shinyServer(function(input, output) {
     
     
     filename = function() {
-      paste0(input$country, Sys.Date(), ".csv")
+      paste0(input$country, Sys.Date(), "-results.csv")
     },
     
     content = function(file) {

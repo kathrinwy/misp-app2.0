@@ -1,4 +1,4 @@
-#
+
 # This is the user-interface definition of the MISP Calculator 2.0 2020 edition
 # created by Kathrin Weny, deployed 27 May 2020
 
@@ -11,18 +11,18 @@ library(DT)
 library(shinythemes)
 
 
-data.misp     <- read.csv("data.misp.2020.csv")
+data.misp      <- read.csv("data.misp.2020.csv")
 data.misp.tbl1 <- data.misp[c("country", "wra", "t.18.up", "f.10.14", "f.10.19", "t.10.24", "m.18.up", "cbr", "sti", "nnmr", "mmr")]
 data.misp.tbl2 <- data.misp[c("country", "mpds.all.f")]
 data.misp.tbl3 <- data.misp[c("country", "hiv", "art")]
 data.misp.tbl4 <- data.misp[c("country", "abortion")]
 
-input.dem.1 <- read.csv("input.dem.1.csv")
-input.dem.2 <- read.csv("input.dem.2.csv")
-input.srh.1 <- read.csv("input.srh.1.csv")
-input.srh.2 <- read.csv("input.srh.2.csv")
-input.fp.1 <- read.csv("input.fp.1.csv")
-input.fp.2 <- read.csv("input.fp.2.csv")
+input.dem.1    <- read.csv("input.dem.1.csv")
+input.dem.2    <- read.csv("input.dem.2.csv")
+input.srh.1    <- read.csv("input.srh.1.csv")
+input.srh.2    <- read.csv("input.srh.2.csv")
+input.fp.1     <- read.csv("input.fp.1.csv")
+input.fp.2     <- read.csv("input.fp.2.csv")
 
 
 # Define UI for application that draws a histogram
@@ -123,25 +123,25 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
              
                     tags$h1("Results"),
                     
-                    br(),
+           br(),
                     
                     p("In this tab, you can view and download MISP Calculations, based on the inputs in the previous tab."),
                     p("Again, estimates are available base on either", strong("Global constants, Country data"), "or", strong("site specific"), 
                       "inputs you may have provided."),
-                    br(),
+           br(),
                     
                     tags$h4("Demographic Indicators"),  
                     rHandsontableOutput("table4"),
        
-                    br(),
+           br(),
 
                     tags$h4("Maternal and Newborn Health"),  
                     rHandsontableOutput("table5"),
                     br(),
                     tags$h4("Access to Sexual and Reproductive Health"),  
                     rHandsontableOutput("table6"),
-             br(),
-             br(),
+           br(),
+           br(),
            
            p("You can download your resuts by clicking on the button below:"),
            downloadButton("downloadResults", "Download results")),
@@ -184,7 +184,7 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
            p("Center for Reproductive Rights, The World's Abortion Laws, 2019, accessible", 
              tags$a(href="https://reproductiverights.org/worldabortionlaws", "here"),".")),
           
-            column(6,
+           column(6,
            tags$h1("MISP Calculator 2.0 app support"),
            br(),
            p("If you have questions regarding the implemenation of the MISP or would like to provide feedback regaring the usage of the MISP Calculator 2.0 app, please contact XYZ XYZ. 
