@@ -9,21 +9,9 @@ library(readxl)
 library(rhandsontable)
 library(DT)
 library(shinythemes)
-
+library(writexl)
 
 data.misp      <- read.csv("data.misp.2020.csv")
-data.misp.tbl1 <- data.misp[c("country", "wra", "t.18.up", "f.10.14", "f.10.19", "t.10.24", "m.18.up", "cbr", "sti", "nnmr", "mmr")]
-data.misp.tbl2 <- data.misp[c("country", "mpds.all.f")]
-data.misp.tbl3 <- data.misp[c("country", "hiv", "art")]
-data.misp.tbl4 <- data.misp[c("country", "abortion")]
-
-input.dem.1    <- read.csv("input.dem.1.csv")
-input.dem.2    <- read.csv("input.dem.2.csv")
-input.srh.1    <- read.csv("input.srh.1.csv")
-input.srh.2    <- read.csv("input.srh.2.csv")
-input.fp.1     <- read.csv("input.fp.1.csv")
-input.fp.2     <- read.csv("input.fp.2.csv")
-
 
 # Define UI for application that draws a histogram
 shinyUI <- fluidPage(theme = shinytheme("flatly"),
@@ -144,8 +132,13 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
            br(),
            
            p("You can download your resuts by clicking on the button below:"),
-           downloadButton("downloadResults", "Download results")),
+           downloadButton("downloadResultsCSV", "Download results (CSV)")),
            
+           br()),
+  
+  fluidRow(style='padding-left:50px',
+           
+           downloadButton("downloadResultsExcel", "Download results (Excel)"),
            br(),
            br()
            

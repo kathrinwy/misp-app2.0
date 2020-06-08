@@ -149,10 +149,9 @@ shinyServer(function(input, output) {
                                   "# of pregnant women")
     
     rhandsontable(output.table1, rowHeaderWidth = 450, colHeaders = c("Global constants", "Country data", "Site specific")) %>%
-      hot_col(3, width = 200, readOnly = TRUE, valign = "htCenter") %>%
-      hot_col(2, width = 200, readOnly = TRUE, valign = "htCenter") %>%
-      hot_col(1, width = 200, readOnly = TRUE, valign = "htCenter")
-    
+      hot_col("Site specific", width = 200, readOnly = TRUE, valign = "htCenter") %>%
+      hot_col("Country data", width = 200, readOnly = TRUE, valign = "htCenter") %>%
+      hot_col("Global constants", width = 200, readOnly = TRUE, valign = "htCenter")
     
   })
   
@@ -555,8 +554,10 @@ shinyServer(function(input, output) {
         paste0("-"),  # Combined oral contraceptives
         paste0("-"),  # Injectable contractptives
         paste0("-"),  # IUD
-        paste0(round(as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 2]*input$num,2)),  # HIV
-        paste0(round(as.numeric(contentsTableDat.5()[10,2])*as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 1]*input$num,0)),  # HIV/ART
+        paste0(ifelse(is.na(round(as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 2]*input$num,2)), "-",  # HIV
+                       round(as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 2]*input$num,2))),
+        paste0(ifelse(is.na(round(as.numeric(contentsTableDat.5()[10,2])*as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 1]*input$num,0)), "-",  # HIV/ART
+                      round(as.numeric(contentsTableDat.5()[10,2])*as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 1]*input$num,0))),
         paste0("-"),  # People seeking care for STI syndroms
         paste0("-"),  # Sexual violence
         paste0("-"),                                                                       # Safe induced abortion rate
@@ -800,7 +801,7 @@ shinyServer(function(input, output) {
   })
   
   
-  output$downloadResults <- downloadHandler(
+  output$downloadResultsCSV <- downloadHandler(
     
     
     filename = function() {
@@ -811,7 +812,6 @@ shinyServer(function(input, output) {
       
       a <- hot_to_r(input$table4)
       b <- hot_to_r(input$table5)
-      
       c <- hot_to_r(input$table6)
       
       data <- rbind(a, b, c)
@@ -820,6 +820,27 @@ shinyServer(function(input, output) {
       
       write.csv(data, file)
       
+    }
+  )
+  
+  output$downloadResultsExcel <- downloadHandler(
+    filename = function() {
+      paste0(input$country, Sys.Date(), "-results.xlsx")
+    },
+    content = function(file) {
+      
+      a <- hot_to_r(input$table4)
+      b <- hot_to_r(input$table5)
+      c <- hot_to_r(input$table6)
+      
+      colnames(a) <- c("Global constants", "Country data", "Site-specific estimates")
+      colnames(b) <- c("Global constants", "Country data", "Site-specific estimates")
+      colnames(c) <- c("Global constants", "Country data", "Site-specific estimates")
+      
+      sheets <- list("Demographic Indicators" = a,
+                     "Maternal and Newborn Health" = b,
+                     "Sexual and Reproductive Health" = c)
+      write_xlsx(sheets, file)
     }
   )
   
