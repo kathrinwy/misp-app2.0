@@ -16,29 +16,8 @@ data.misp      <- read.csv("data.misp.2020.csv")
 # Define UI for application that draws a histogram
 shinyUI <- fluidPage(theme = shinytheme("flatly"),
   
- # list(
-                 
-                 #tags$style(
-
-    #  '.navbar-default .navbar-brand { color: #FFFFF0; 
-     #                                 font-size: 44px; 
-      #                                background-color: #000080;}', 
-                                      
-      #'.navbar-nav > li > a, .navbar-brand {
-       #            padding-top:35px !important; 
-        #           padding-bottom:45px !important;
-         #          height: 45px;
-    #  }',
-                 
-     # '.navbar {min-height:45px !important;}'
-
- #)),
- 
- 
-
   navbarPage("MISP Calculator 2.0",
 
-  
   tabPanel("Input Data for MISP Calculations",
            
            fluidRow(style='padding-left:50px',
@@ -134,7 +113,7 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
            p("You can download your resuts by clicking on the button below:"),
            downloadButton("downloadResultsCSV", "Download results (CSV)")),
            
-           br()),
+           br(),
   
   fluidRow(style='padding-left:50px',
            
@@ -142,7 +121,7 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
            br(),
            br()
            
-           ),
+           )),
   
   tabPanel("Sources & Support", style='padding-left:50px',
            
