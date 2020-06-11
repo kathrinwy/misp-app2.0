@@ -9,12 +9,16 @@ library(readxl)
 library(rhandsontable)
 library(DT)
 library(shinythemes)
-library(writexl)
+library(openxlsx)
 
 data.misp      <- read.csv("data.misp.2020.csv")
 
 # Define UI for application that draws a histogram
-shinyUI <- fluidPage(theme = shinytheme("flatly"),
+shinyUI <- fluidPage(
+  
+  theme = shinytheme("flatly"),
+  
+  tags$head(tags$script(src="format_numbers.js")),
   
   navbarPage("MISP Calculator 2.0",
 
@@ -40,11 +44,14 @@ shinyUI <- fluidPage(theme = shinytheme("flatly"),
                                 choices = data.misp$country,
                                 selected = "Algeria"),
                     
-                    numericInput("num", 
-                                 label = "Number of affected persons", 
-                                 value = 100000), 
-                    
+                    #numericInput("num", 
+                     #            "Number of affected persons", 
+                      #           100000), 
+
                     br(),
+             
+             numericInput('n2', 'Number of affected persons', 100000),
+             br(),
 
                     tags$h1("Input Data for MISP Calculator"),
                     

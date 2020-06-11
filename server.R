@@ -3,6 +3,7 @@
 # created by Kathrin Weny, deployed 27 May 2020
 
 library(shiny)
+
 data.misp     <- read.csv("data.misp.2020.csv")
 data.misp.tbl1 <- data.misp[c("country", "wra", "t.18.up", "f.10.14", "f.10.19", "t.10.24", "m.18.up", "cbr", "sti", "nnmr", "mmr")]
 data.misp.tbl2 <- data.misp[c("country", "mpds.all.f")]
@@ -45,10 +46,17 @@ shinyServer(function(input, output) {
     return(t5)
   })
   
-  test.num <- reactive({
-    tnum <- input$num 
-    return(tnum)
-  })
+  #test.num <- reactive({
+   # tnum <- input$num 
+    #return(tnum)
+    
+    
+#  })
+  
+  
+  n2 <- reactive({ as.numeric(gsub(",", "", input$n2)) })
+
+
   
   output$table1.1               <- renderRHandsontable({
     data.select1                <- data.misp.tbl1[data.misp.tbl1$country == input$country,] 
@@ -107,36 +115,36 @@ shinyServer(function(input, output) {
     output.table1 <- data.frame(cbind(
       
       c(
-        paste0(contentsTableDat.1()[1, 1]*input$num),
-        paste0(contentsTableDat.1()[2, 1]*input$num),
-        paste0(contentsTableDat.1()[3, 1]*input$num),
-        paste0(contentsTableDat.1()[4, 1]*input$num),
-        paste0(contentsTableDat.1()[5, 1]*input$num),
-        paste0(contentsTableDat.1()[6, 1]*input$num), 
-        round(contentsTableDat.2()[1, 1]*input$num/1000, 0),
-        round(contentsTableDat.2()[1, 1]*input$num/12000),
-        round((contentsTableDat.2()[1, 1]*input$num/12000)*9)),
+        contentsTableDat.1()[1, 1]* n2() ,
+        contentsTableDat.1()[2, 1]* n2(),
+        contentsTableDat.1()[3, 1]* n2(),
+        contentsTableDat.1()[4, 1]*n2(),
+        contentsTableDat.1()[5, 1]* n2(),
+        contentsTableDat.1()[6, 1]* n2(), 
+        contentsTableDat.2()[1, 1]* n2()/1000,
+        round(contentsTableDat.2()[1, 1]* n2()/12000,0),
+        round((contentsTableDat.2()[1, 1]* n2()/12000)*9)),
       
       c(
-        paste0(contentsTableDat.1()[1, 2]*input$num),
-        paste0(contentsTableDat.1()[2, 2]*input$num),
-        paste0(contentsTableDat.1()[3, 2]*input$num),
-        paste0(contentsTableDat.1()[4, 2]*input$num),
-        paste0(contentsTableDat.1()[5, 2]*input$num),
-        paste0(contentsTableDat.1()[6, 2]*input$num),
-        round(contentsTableDat.2()[1, 2]*input$num/1000, 0),
-        round(contentsTableDat.2()[1, 2]*input$num/12000),
-        round((contentsTableDat.2()[1, 2]*input$num/12000)*9)),
+        contentsTableDat.1()[1, 2]*n2(),
+        contentsTableDat.1()[2, 2]*n2(),
+        contentsTableDat.1()[3, 2]*n2(),
+        contentsTableDat.1()[4, 2]*n2(),
+        contentsTableDat.1()[5, 2]*n2(),
+        contentsTableDat.1()[6, 2]*n2(),
+        round(contentsTableDat.2()[1, 2]*n2()/1000, 0),
+        round(contentsTableDat.2()[1, 2]*n2()/12000),
+        round((contentsTableDat.2()[1, 2]*n2()/12000)*9)),
       
-      c(ifelse((contentsTableDat.1()[1, 3] != "-" & contentsTableDat.1()[1, 3] != ""), paste0(as.numeric(contentsTableDat.1()[1, 3])*input$num), "-"),
-        ifelse((contentsTableDat.1()[2, 3] != "-" & contentsTableDat.1()[2, 3] != ""), paste0(as.numeric(contentsTableDat.1()[2, 3])*input$num), "-"),
-        ifelse((contentsTableDat.1()[3, 3] != "-" & contentsTableDat.1()[3, 3] != ""), paste0(as.numeric(contentsTableDat.1()[3, 3])*input$num), "-"),
-        ifelse((contentsTableDat.1()[4, 3] != "-" & contentsTableDat.1()[4, 3] != ""), paste0(as.numeric(contentsTableDat.1()[4, 3])*input$num), "-"),
-        ifelse((contentsTableDat.1()[5, 3] != "-" & contentsTableDat.1()[5, 3] != ""), paste0(as.numeric(contentsTableDat.1()[5, 3])*input$num), "-"),
-        ifelse((contentsTableDat.1()[6, 3] != "-" & contentsTableDat.1()[6, 3] != ""), paste0(as.numeric(contentsTableDat.1()[6, 3])*input$num), "-"),
-        ifelse((contentsTableDat.2()[1, 3] != "-" & contentsTableDat.2()[1, 3] != ""), round(as.numeric(contentsTableDat.2()[1, 3])*input$num/1000, 0), "-"),
-        ifelse((contentsTableDat.2()[1, 3] != "-" & contentsTableDat.2()[1, 3] != ""), round(as.numeric(contentsTableDat.2()[1, 3])*input$num/12000), "-"),
-        ifelse((contentsTableDat.2()[1, 3] != "-" & contentsTableDat.2()[1, 3] != ""), round((as.numeric(contentsTableDat.2()[1, 3])*input$num/12000)*9), "-")))) 
+      c(ifelse((contentsTableDat.1()[1, 3] != "-" & contentsTableDat.1()[1, 3] != ""), paste0(as.numeric(contentsTableDat.1()[1, 3])*n2()), "-"),
+        ifelse((contentsTableDat.1()[2, 3] != "-" & contentsTableDat.1()[2, 3] != ""), paste0(as.numeric(contentsTableDat.1()[2, 3])*n2()), "-"),
+        ifelse((contentsTableDat.1()[3, 3] != "-" & contentsTableDat.1()[3, 3] != ""), paste0(as.numeric(contentsTableDat.1()[3, 3])*n2()), "-"),
+        ifelse((contentsTableDat.1()[4, 3] != "-" & contentsTableDat.1()[4, 3] != ""), paste0(as.numeric(contentsTableDat.1()[4, 3])*n2()), "-"),
+        ifelse((contentsTableDat.1()[5, 3] != "-" & contentsTableDat.1()[5, 3] != ""), paste0(as.numeric(contentsTableDat.1()[5, 3])*n2()), "-"),
+        ifelse((contentsTableDat.1()[6, 3] != "-" & contentsTableDat.1()[6, 3] != ""), paste0(as.numeric(contentsTableDat.1()[6, 3])*n2()), "-"),
+        ifelse((contentsTableDat.2()[1, 3] != "-" & contentsTableDat.2()[1, 3] != ""), round(as.numeric(contentsTableDat.2()[1, 3])*n2()/1000, 0), "-"),
+        ifelse((contentsTableDat.2()[1, 3] != "-" & contentsTableDat.2()[1, 3] != ""), round(as.numeric(contentsTableDat.2()[1, 3])*n2()/12000), "-"),
+        ifelse((contentsTableDat.2()[1, 3] != "-" & contentsTableDat.2()[1, 3] != ""), round((as.numeric(contentsTableDat.2()[1, 3])*n2()/12000)*9), "-")))) 
     
     row.names(output.table1) <- c("# of WRA", 
                                   "# of adults (18+)", 
@@ -149,9 +157,9 @@ shinyServer(function(input, output) {
                                   "# of pregnant women")
     
     rhandsontable(output.table1, rowHeaderWidth = 450, colHeaders = c("Global constants", "Country data", "Site specific")) %>%
-      hot_col("Site specific", width = 200, readOnly = TRUE, valign = "htCenter") %>%
-      hot_col("Country data", width = 200, readOnly = TRUE, valign = "htCenter") %>%
-      hot_col("Global constants", width = 200, readOnly = TRUE, valign = "htCenter")
+      hot_col("Site specific", width = 200,  type= "numeric", format = "0,0",readOnly = TRUE, valign = "htCenter") %>%
+      hot_col("Country data", width = 200,  type= "numeric", format = "0,0",readOnly = TRUE, valign = "htCenter") %>%
+      hot_col("Global constants", width = 200, type= "numeric", format = "0,0", readOnly = TRUE, valign = "htCenter")
     
   })
   
@@ -209,158 +217,158 @@ shinyServer(function(input, output) {
     
     output.table2 <- data.frame(cbind( 
       rbind("next 3 months/next month",
-            paste0(round(contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,1]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,1]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[3, 1]*contentsTableDat.2()[1,1]*input$num*1.15/4000,0),"/", 
-                   (round(contentsTableDat.3()[3, 1]*contentsTableDat.2()[1,1]*input$num*1.15/12000,0))),
-            paste0(round(contentsTableDat.3()[4, 1]*contentsTableDat.2()[1,1]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[4, 1]*contentsTableDat.2()[1,1]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[5, 1]*contentsTableDat.2()[1,1]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[5, 1]*contentsTableDat.2()[1,1]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[6, 1]*contentsTableDat.2()[1,1]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[6, 1]*contentsTableDat.2()[1,1]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[7, 1]*contentsTableDat.2()[1,1]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[7, 1]*contentsTableDat.2()[1,1]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[8, 1]*contentsTableDat.2()[1,1]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[8, 1]*contentsTableDat.2()[1,1]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[9, 1]*contentsTableDat.2()[1,1]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[9, 1]*contentsTableDat.2()[1,1]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[10, 1]*contentsTableDat.2()[1,1]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[10, 1]*contentsTableDat.2()[1,1]*input$num/12000,0))),
+            paste0(round(contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,1]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,1]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[3, 1]*contentsTableDat.2()[1,1]*n2()*1.15/4000,0),"/", 
+                   (round(contentsTableDat.3()[3, 1]*contentsTableDat.2()[1,1]*n2()*1.15/12000,0))),
+            paste0(round(contentsTableDat.3()[4, 1]*contentsTableDat.2()[1,1]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[4, 1]*contentsTableDat.2()[1,1]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[5, 1]*contentsTableDat.2()[1,1]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[5, 1]*contentsTableDat.2()[1,1]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[6, 1]*contentsTableDat.2()[1,1]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[6, 1]*contentsTableDat.2()[1,1]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[7, 1]*contentsTableDat.2()[1,1]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[7, 1]*contentsTableDat.2()[1,1]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[8, 1]*contentsTableDat.2()[1,1]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[8, 1]*contentsTableDat.2()[1,1]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[9, 1]*contentsTableDat.2()[1,1]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[9, 1]*contentsTableDat.2()[1,1]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[10, 1]*contentsTableDat.2()[1,1]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[10, 1]*contentsTableDat.2()[1,1]*n2()/12000,0))),
             "-"),
       
       rbind("next 3 months/next month",
-            paste0(round(contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,2]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,2]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[3, 1]*contentsTableDat.2()[1,2]*input$num*1.15/4000,0),"/", 
-                   (round(contentsTableDat.3()[3, 1]*contentsTableDat.2()[1,2]*input$num*1.15/12000,0))),
-            paste0(round(contentsTableDat.3()[4, 1]*contentsTableDat.2()[1,2]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[4, 1]*contentsTableDat.2()[1,2]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[5, 1]*contentsTableDat.2()[1,2]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[5, 1]*contentsTableDat.2()[1,2]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[6, 1]*contentsTableDat.2()[1,2]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[6, 1]*contentsTableDat.2()[1,2]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[7, 1]*contentsTableDat.2()[1,2]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[7, 1]*contentsTableDat.2()[1,2]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[8, 1]*contentsTableDat.2()[1,2]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[8, 1]*contentsTableDat.2()[1,2]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[9, 1]*contentsTableDat.2()[1,2]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[9, 1]*contentsTableDat.2()[1,2]*input$num/12000,0))),
-            paste0(round(contentsTableDat.3()[10, 1]*contentsTableDat.2()[1,2]*input$num/4000,0),"/", 
-                   (round(contentsTableDat.3()[10, 1]*contentsTableDat.2()[1,2]*input$num/12000,0))),
-            paste0(round(((contentsTableDat.2()[1, 2]*input$num/12000)*9 +  # Currently pregnant women
-                            ((contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,2]*input$num/4000)*3))*  # pregnancies that end in miscr/abortion
+            paste0(round(contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,2]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,2]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[3, 1]*contentsTableDat.2()[1,2]*n2()*1.15/4000,0),"/", 
+                   (round(contentsTableDat.3()[3, 1]*contentsTableDat.2()[1,2]*n2()*1.15/12000,0))),
+            paste0(round(contentsTableDat.3()[4, 1]*contentsTableDat.2()[1,2]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[4, 1]*contentsTableDat.2()[1,2]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[5, 1]*contentsTableDat.2()[1,2]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[5, 1]*contentsTableDat.2()[1,2]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[6, 1]*contentsTableDat.2()[1,2]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[6, 1]*contentsTableDat.2()[1,2]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[7, 1]*contentsTableDat.2()[1,2]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[7, 1]*contentsTableDat.2()[1,2]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[8, 1]*contentsTableDat.2()[1,2]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[8, 1]*contentsTableDat.2()[1,2]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[9, 1]*contentsTableDat.2()[1,2]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[9, 1]*contentsTableDat.2()[1,2]*n2()/12000,0))),
+            paste0(round(contentsTableDat.3()[10, 1]*contentsTableDat.2()[1,2]*n2()/4000,0),"/", 
+                   (round(contentsTableDat.3()[10, 1]*contentsTableDat.2()[1,2]*n2()/12000,0))),
+            paste0(round(((contentsTableDat.2()[1, 2]*n2()/12000)*9 +  # Currently pregnant women
+                            ((contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,2]*n2()/4000)*3))*  # pregnancies that end in miscr/abortion
                            (as.numeric(contentsTableDat.4()[2,2])/100000)/3), "/",
-                   round(((contentsTableDat.2()[1, 2]*input$num/12000)*9 +  # Currently pregnant women
-                            ((contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,2]*input$num/4000)*3))*  # pregnancies that end in miscr/abortion
+                   round(((contentsTableDat.2()[1, 2]*n2()/12000)*9 +  # Currently pregnant women
+                            ((contentsTableDat.3()[2, 1]*contentsTableDat.2()[1,2]*n2()/4000)*3))*  # pregnancies that end in miscr/abortion
                            (as.numeric(contentsTableDat.4()[2,2])/100000)/6))), 
       
       rbind("next 3 months/next month",
             
             # Pregnancies that end in miscarraige and unsafe abortion   
             ifelse(contentsTableDat.3()[2, 3] != "-"  & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""),
-                   paste0(round(as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000, 0),"/", 
-                          round(as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/12000,0)), 
+                   paste0(round(as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000, 0),"/", 
+                          round(as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/12000,0)), 
                    
                    ifelse(contentsTableDat.3()[2, 3] != "-" & (contentsTableDat.2()[1, 3] != "-"),
-                          paste0(round(as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000,0),"/", 
-                                 round(as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/12000,0)),
+                          paste0(round(as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000,0),"/", 
+                                 round(as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/12000,0)),
                           
                           ifelse((contentsTableDat.3()[2, 3] == "-"  |  contentsTableDat.3()[2, 3] == "" ) & (contentsTableDat.2()[1, 3] == "-" |  contentsTableDat.2()[1, 3] == "" ), "-", 
                                  ifelse((contentsTableDat.3()[2, 3] == "-"  |  contentsTableDat.3()[2, 3] == "" ) & (contentsTableDat.2()[1, 3] != "-"), "-", "Error")))),
             
             # Stillbirths
             ifelse(contentsTableDat.3()[3, 3] != "-" & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""),
-                   paste0(round(as.numeric(contentsTableDat.3()[3, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num*1.15/4000, 0),"/", 
-                          round(as.numeric(contentsTableDat.3()[3, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num*1.15/12000,0)), 
+                   paste0(round(as.numeric(contentsTableDat.3()[3, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()*1.15/4000, 0),"/", 
+                          round(as.numeric(contentsTableDat.3()[3, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()*1.15/12000,0)), 
                    
                    ifelse(contentsTableDat.3()[3, 3] != "-" & (contentsTableDat.2()[1, 3] != "-"),
-                          paste0(round(as.numeric(contentsTableDat.3()[3, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num*1.15/4000,0),"/", 
-                                 round(as.numeric(contentsTableDat.3()[3, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num*1.15/12000,0)),
+                          paste0(round(as.numeric(contentsTableDat.3()[3, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()*1.15/4000,0),"/", 
+                                 round(as.numeric(contentsTableDat.3()[3, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()*1.15/12000,0)),
                           
                           ifelse((contentsTableDat.3()[3, 3] == "-" |  contentsTableDat.3()[3, 3] == "") & (contentsTableDat.2()[1, 3] == "-" |  contentsTableDat.2()[1, 3] == ""), "-", 
                                  ifelse((contentsTableDat.3()[3, 3] == "-" |  contentsTableDat.3()[3, 3] == "") & (contentsTableDat.2()[1, 3] != "-"), "-", "Error")))),
             
             # Pregnant women who will experience complications  
             ifelse(contentsTableDat.3()[4, 3] != "-" & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""),
-                   paste0(round(as.numeric(contentsTableDat.3()[4, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000,0),"/", 
-                          (round(as.numeric(contentsTableDat.3()[4, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/12000,0))),
+                   paste0(round(as.numeric(contentsTableDat.3()[4, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000,0),"/", 
+                          (round(as.numeric(contentsTableDat.3()[4, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/12000,0))),
                    
                    ifelse(contentsTableDat.3()[4, 3] != "-" & contentsTableDat.2()[1, 3] != "-",      
-                          paste0(round(as.numeric(contentsTableDat.3()[4, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000,0),"/", 
-                                 (round(as.numeric(contentsTableDat.3()[4, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/12000,0))),
+                          paste0(round(as.numeric(contentsTableDat.3()[4, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000,0),"/", 
+                                 (round(as.numeric(contentsTableDat.3()[4, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/12000,0))),
                           
                           ifelse((contentsTableDat.3()[4, 3] == "-"  |  contentsTableDat.3()[4, 3] == "") & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""), "-", 
                                  ifelse((contentsTableDat.3()[4, 3] == "-"  |  contentsTableDat.3()[4, 3] == "") & (contentsTableDat.2()[1, 3] != "-"), "-", "Error")))),
             
             # Newborns who will experience complications
             ifelse(contentsTableDat.3()[5, 3] != "-" & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""),
-                   paste0(round(as.numeric(contentsTableDat.3()[5, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000,0),"/", 
-                          (round(as.numeric(contentsTableDat.3()[5, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/12000,0))),
+                   paste0(round(as.numeric(contentsTableDat.3()[5, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000,0),"/", 
+                          (round(as.numeric(contentsTableDat.3()[5, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/12000,0))),
                    
                    ifelse(contentsTableDat.3()[5, 3] != "-" & contentsTableDat.2()[1, 3] != "-",  
-                          paste0(round(as.numeric(contentsTableDat.3()[5, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000,0),"/", 
-                                 (round(as.numeric(contentsTableDat.3()[5, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/12000,0))),
+                          paste0(round(as.numeric(contentsTableDat.3()[5, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000,0),"/", 
+                                 (round(as.numeric(contentsTableDat.3()[5, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/12000,0))),
                           
                           ifelse((contentsTableDat.3()[5, 3] == "-" | contentsTableDat.3()[5, 3] == "") & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""), "-", 
                                  ifelse((contentsTableDat.3()[5, 3] == "-" | contentsTableDat.3()[5, 3] == "") & (contentsTableDat.2()[1, 3] != "-"), "-", "Error")))),
             
             # Babies who will weigh less than 2,500g at birth
             ifelse(contentsTableDat.3()[6, 3] != "-" & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""),
-                   paste0(round(as.numeric(contentsTableDat.3()[6, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000,0),"/", 
-                          (round(as.numeric(contentsTableDat.3()[6, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/12000,0))),
+                   paste0(round(as.numeric(contentsTableDat.3()[6, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000,0),"/", 
+                          (round(as.numeric(contentsTableDat.3()[6, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/12000,0))),
                    
                    ifelse(contentsTableDat.3()[6, 3] != "-" & contentsTableDat.2()[1, 3] != "-",  
-                          paste0(round(as.numeric(contentsTableDat.3()[6, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000,0),"/", 
-                                 (round(as.numeric(contentsTableDat.3()[6, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/12000,0))),
+                          paste0(round(as.numeric(contentsTableDat.3()[6, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000,0),"/", 
+                                 (round(as.numeric(contentsTableDat.3()[6, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/12000,0))),
                           
                           ifelse((contentsTableDat.3()[6, 3] == "-"  | contentsTableDat.3()[6, 3] == "") & (contentsTableDat.2()[1, 3] == "-"  | contentsTableDat.2()[1, 3] == ""), "-", 
                                  ifelse((contentsTableDat.3()[6, 3] == "-"  | contentsTableDat.3()[6, 3] == "") & (contentsTableDat.2()[1, 3] != "-"), "-", "Error")))),
             
             # Pregnant women who will have access to a health center
             ifelse(contentsTableDat.3()[7, 3] != "-" & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""),
-                   paste0(round(as.numeric(contentsTableDat.3()[7, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000,0),"/", 
-                          (round(as.numeric(contentsTableDat.3()[7, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/12000,0))),
+                   paste0(round(as.numeric(contentsTableDat.3()[7, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000,0),"/", 
+                          (round(as.numeric(contentsTableDat.3()[7, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/12000,0))),
                    
                    ifelse(contentsTableDat.3()[7, 3] != "-" & contentsTableDat.2()[1, 3] != "-",  
-                          paste0(round(as.numeric(contentsTableDat.3()[7, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000,0),"/", 
-                                 (round(as.numeric(contentsTableDat.3()[7, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/12000,0))),
+                          paste0(round(as.numeric(contentsTableDat.3()[7, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000,0),"/", 
+                                 (round(as.numeric(contentsTableDat.3()[7, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/12000,0))),
                           
                           ifelse((contentsTableDat.3()[7, 3] == "-" | contentsTableDat.3()[7, 3] == "") & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""), "-", 
                                  ifelse((contentsTableDat.3()[7, 3] == "-" | contentsTableDat.3()[7, 3] == "") & (contentsTableDat.2()[1, 3] != "-"), "-", "Error")))),
             
             # Pregnant women who will need suturing of vaginal tears
             ifelse(contentsTableDat.3()[8, 3] != "-" & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""),
-                   paste0(round(as.numeric(contentsTableDat.3()[8, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000,0),"/", 
-                          (round(as.numeric(contentsTableDat.3()[8, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/12000,0))),
+                   paste0(round(as.numeric(contentsTableDat.3()[8, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000,0),"/", 
+                          (round(as.numeric(contentsTableDat.3()[8, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/12000,0))),
                    
                    ifelse(contentsTableDat.3()[8, 3] != "-" & contentsTableDat.2()[1, 3] != "-",  
-                          paste0(round(as.numeric(contentsTableDat.3()[8, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000,0),"/", 
-                                 (round(as.numeric(contentsTableDat.3()[8, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/12000,0))),
+                          paste0(round(as.numeric(contentsTableDat.3()[8, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000,0),"/", 
+                                 (round(as.numeric(contentsTableDat.3()[8, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/12000,0))),
                           
                           ifelse((contentsTableDat.3()[8, 3] == "-" | contentsTableDat.3()[8, 3] == "") & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""), "-", 
                                  ifelse((contentsTableDat.3()[8, 3] == "-" | contentsTableDat.3()[8, 3] == "") & (contentsTableDat.2()[1, 3] != "-"), "-", "Error")))),
             
             # Deliveries requirng a C-section (min)
             ifelse(contentsTableDat.3()[9, 3] != "-" & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""),
-                   paste0(round(as.numeric(contentsTableDat.3()[9, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000,0),"/", 
-                          (round(as.numeric(contentsTableDat.3()[9, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/12000,0))),
+                   paste0(round(as.numeric(contentsTableDat.3()[9, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000,0),"/", 
+                          (round(as.numeric(contentsTableDat.3()[9, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/12000,0))),
                    
                    ifelse(contentsTableDat.3()[9, 3] != "-" & contentsTableDat.2()[1, 3] != "-",  
-                          paste0(round(as.numeric(contentsTableDat.3()[9, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000,0),"/", 
-                                 (round(as.numeric(contentsTableDat.3()[9, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/12000,0))),
+                          paste0(round(as.numeric(contentsTableDat.3()[9, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000,0),"/", 
+                                 (round(as.numeric(contentsTableDat.3()[9, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/12000,0))),
                           
                           ifelse((contentsTableDat.3()[9, 3] == "-" | contentsTableDat.3()[9, 3] == "") & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""), "-", 
                                  ifelse((contentsTableDat.3()[9, 3] == "-" | contentsTableDat.3()[9, 3] == "") & (contentsTableDat.2()[1, 3] != "-"), "-", "Error")))),
             
             # Deliveries requiring a C-section (max)
             ifelse(contentsTableDat.3()[10, 3] != "-" & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""),
-                   paste0(round(as.numeric(contentsTableDat.3()[10, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000,0),"/", 
-                          (round(as.numeric(contentsTableDat.3()[10, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/12000,0))),
+                   paste0(round(as.numeric(contentsTableDat.3()[10, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000,0),"/", 
+                          (round(as.numeric(contentsTableDat.3()[10, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/12000,0))),
                    
                    ifelse(contentsTableDat.3()[10, 3] != "-" & contentsTableDat.2()[1, 3] != "-",  
-                          paste0(round(as.numeric(contentsTableDat.3()[10, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000,0),"/", 
-                                 (round(as.numeric(contentsTableDat.3()[10, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/12000,0))),
+                          paste0(round(as.numeric(contentsTableDat.3()[10, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000,0),"/", 
+                                 (round(as.numeric(contentsTableDat.3()[10, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/12000,0))),
                           
                           ifelse((contentsTableDat.3()[10, 3] == "-" | contentsTableDat.3()[10, 3] == "") & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == ""), "-", 
                                  ifelse((contentsTableDat.3()[10, 3] == "-" | contentsTableDat.3()[10, 3] == "") & (contentsTableDat.2()[1, 3] != "-"), "-", "Error")))),
@@ -370,73 +378,73 @@ shinyServer(function(input, output) {
                      (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == "") &
                      (contentsTableDat.4()[2, 3] == "-" | contentsTableDat.4()[2, 2] == ""),  # miscr/abortion site-specific
                    
-                   paste0(round(((contentsTableDat.2()[1, 2]*input$num/12000)*9 +
-                                   ((as.numeric(contentsTableDat.3()[2, 3])*contentsTableDat.2()[1, 2]*input$num/4000)*3))*  
+                   paste0(round(((contentsTableDat.2()[1, 2]*n2()/12000)*9 +
+                                   ((as.numeric(contentsTableDat.3()[2, 3])*contentsTableDat.2()[1, 2]*n2()/4000)*3))*  
                                   (as.numeric(contentsTableDat.4()[2, 2])/100000)/3), "/",
-                          round(((contentsTableDat.2()[1, 2]*input$num/12000)*9 +
-                                   ((as.numeric(contentsTableDat.3()[2, 3])*contentsTableDat.2()[1, 2]*input$num/4000)*3))*
+                          round(((contentsTableDat.2()[1, 2]*n2()/12000)*9 +
+                                   ((as.numeric(contentsTableDat.3()[2, 3])*contentsTableDat.2()[1, 2]*n2()/4000)*3))*
                                   (as.numeric(contentsTableDat.4()[2, 2])/100000)/6)), 
                    
                    ifelse(contentsTableDat.3()[2, 3] != "-" & 
                             contentsTableDat.2()[1, 3] != "-" &
                             (contentsTableDat.4()[2, 3] == "-" | contentsTableDat.4()[2, 2] == ""),  # miscr/abortion and CBR site-specific
                           
-                          paste0(round(((as.numeric(contentsTableDat.2()[1, 3])*input$num/12000)*9 +
-                                          ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1, 3])*input$num/4000)*3))*  
+                          paste0(round(((as.numeric(contentsTableDat.2()[1, 3])*n2()/12000)*9 +
+                                          ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1, 3])*n2()/4000)*3))*  
                                          (as.numeric(contentsTableDat.4()[2, 2])/100000)/3), "/",
-                                 round(((as.numeric(contentsTableDat.2()[1, 3])*input$num/12000)*9 +
-                                          ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1, 3])*input$num/4000)*3))*
+                                 round(((as.numeric(contentsTableDat.2()[1, 3])*n2()/12000)*9 +
+                                          ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1, 3])*n2()/4000)*3))*
                                          (as.numeric(contentsTableDat.4()[2, 2])/100000)/6)),
                           
                           
                           ifelse(contentsTableDat.3()[2, 3] != "-" & contentsTableDat.2()[1, 3] != "-" & contentsTableDat.4()[2, 3] != "-",
                                  
-                                 paste0(round(((as.numeric(contentsTableDat.2()[1, 3])*input$num/12000)*9 +
-                                                 ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000)*3))*  
+                                 paste0(round(((as.numeric(contentsTableDat.2()[1, 3])*n2()/12000)*9 +
+                                                 ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000)*3))*  
                                                 (as.numeric(contentsTableDat.4()[2,3])/100000)/3), "/",
-                                        round(((as.numeric(contentsTableDat.2()[1, 3])*input$num/12000)*9 +
-                                                 ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000)*3))*  
+                                        round(((as.numeric(contentsTableDat.2()[1, 3])*n2()/12000)*9 +
+                                                 ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000)*3))*  
                                                 (as.numeric(contentsTableDat.4()[2,3])/100000)/6)),  
                                  
                                  ifelse((contentsTableDat.3()[2, 3] == "-"  | contentsTableDat.3()[2, 3] == "")& 
                                           contentsTableDat.2()[1, 3] != "-" & contentsTableDat.4()[2, 3] != "-", 
                                         
-                                        paste0(round(((as.numeric(contentsTableDat.2()[1, 3])*input$num/12000)*9 +
-                                                        ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000)*3))*  
+                                        paste0(round(((as.numeric(contentsTableDat.2()[1, 3])*n2()/12000)*9 +
+                                                        ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000)*3))*  
                                                        (as.numeric(contentsTableDat.4()[2,3])/100000)/3), "/",
-                                               round(((as.numeric(contentsTableDat.2()[1, 3])*input$num/12000)*9 +
-                                                        ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000)*3))*  
+                                               round(((as.numeric(contentsTableDat.2()[1, 3])*n2()/12000)*9 +
+                                                        ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000)*3))*  
                                                        (as.numeric(contentsTableDat.4()[2,3])/100000)/6)),
                                         
                                         ifelse((contentsTableDat.3()[2, 3] == "-"  | contentsTableDat.3()[2, 3] == "")& 
                                                  (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == "") &  contentsTableDat.4()[2, 3] != "-", 
                                                
-                                               paste0(round(((as.numeric(contentsTableDat.2()[1, 2])*input$num/12000)*9 +
-                                                               ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000)*3))*  
+                                               paste0(round(((as.numeric(contentsTableDat.2()[1, 2])*n2()/12000)*9 +
+                                                               ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000)*3))*  
                                                               (as.numeric(contentsTableDat.4()[2,3])/100000)/3), "/",
-                                                      round(((as.numeric(contentsTableDat.2()[1, 2])*input$num/12000)*9 +
-                                                               ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000)*3))*  
+                                                      round(((as.numeric(contentsTableDat.2()[1, 2])*n2()/12000)*9 +
+                                                               ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000)*3))*  
                                                               (as.numeric(contentsTableDat.4()[2,3])/100000)/6)),
                                                
                                                
                                                ifelse(contentsTableDat.3()[2, 3] != "-" & (contentsTableDat.2()[1, 3] == "-" | contentsTableDat.2()[1, 3] == "")&
                                                         contentsTableDat.4()[2, 3] != "-",                                  # abortion and MMR site-specific
                                                       
-                                                      paste0(round(((as.numeric(contentsTableDat.2()[1, 2])*input$num/12000)*9 +
-                                                                      ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000)*3))*  
+                                                      paste0(round(((as.numeric(contentsTableDat.2()[1, 2])*n2()/12000)*9 +
+                                                                      ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000)*3))*  
                                                                      (as.numeric(contentsTableDat.4()[2,3])/100000)/3), "/",
-                                                             round(((as.numeric(contentsTableDat.2()[1, 2])*input$num/12000)*9 +
-                                                                      ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,2])*input$num/4000)*3))*  
+                                                             round(((as.numeric(contentsTableDat.2()[1, 2])*n2()/12000)*9 +
+                                                                      ((as.numeric(contentsTableDat.3()[2, 3])*as.numeric(contentsTableDat.2()[1,2])*n2()/4000)*3))*  
                                                                      (as.numeric(contentsTableDat.4()[2,3])/100000)/6)),
                                                       
                                                       ifelse((contentsTableDat.3()[2, 3] == "-"  | contentsTableDat.3()[2, 3] == "")&     contentsTableDat.2()[1, 3] != "-" &
                                                                (contentsTableDat.4()[2, 3] == "-"| contentsTableDat.4()[2, 3] == ""), 
                                                              
-                                                             paste0(round(((as.numeric(contentsTableDat.2()[1, 3])*input$num/12000)*9 +
-                                                                             ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000)*3))*  
+                                                             paste0(round(((as.numeric(contentsTableDat.2()[1, 3])*n2()/12000)*9 +
+                                                                             ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000)*3))*  
                                                                             (as.numeric(contentsTableDat.4()[2,2])/100000)/3), "/",
-                                                                    round(((as.numeric(contentsTableDat.2()[1, 3])*input$num/12000)*9 +
-                                                                             ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,3])*input$num/4000)*3))*  
+                                                                    round(((as.numeric(contentsTableDat.2()[1, 3])*n2()/12000)*9 +
+                                                                             ((as.numeric(contentsTableDat.3()[2, 1])*as.numeric(contentsTableDat.2()[1,3])*n2()/4000)*3))*  
                                                                             (as.numeric(contentsTableDat.4()[2,2])/100000)/6)),  
                                                              
                                                              ifelse((contentsTableDat.3()[2, 3] == "-"  | contentsTableDat.3()[2, 3] == "")& 
@@ -457,9 +465,9 @@ shinyServer(function(input, output) {
     
     rhandsontable(output.table2, rowHeaderWidth = 450, 
                   colHeaders = c("Global constants", "Country data", "Site specific")) %>%
-      hot_col(3, width = 200, readOnly = TRUE, valign = "htCenter") %>%
-      hot_col(2, width = 200, readOnly = TRUE, valign = "htCenter") %>%
-      hot_col(1, width = 200, readOnly = TRUE, valign = "htCenter")
+      hot_col(3, width = 200, type= "numeric", format = "0,0", readOnly = TRUE, valign = "htCenter") %>%
+      hot_col(2, width = 200, type= "numeric", format = "0,0", readOnly = TRUE, valign = "htCenter") %>%
+      hot_col(1, width = 200, type= "numeric", format = "0,0", readOnly = TRUE, valign = "htCenter")
     
   })
   
@@ -530,34 +538,34 @@ shinyServer(function(input, output) {
     output.table3 <- data.frame(cbind( 
       
       rbind( 
-        paste0(round(as.numeric(contentsTableDat.5()[1, 1])*input$num,0)),                             # Sexually active men
-        paste0(round(as.numeric(contentsTableDat.5()[1, 1])*as.numeric(contentsTableDat.5()[2, 1])*input$num,0)),  # Sexually active men who use condoms
-        paste0(round(as.numeric(contentsTableDat.5()[3, 1])*contentsTableDat.1()[1, 1]*input$num,0)),  # mPDS
-        paste0(round(as.numeric(contentsTableDat.5()[4, 1])*contentsTableDat.1()[1, 1]*input$num,0)),  # Female condoms
-        paste0(round(as.numeric(contentsTableDat.5()[5, 1])*contentsTableDat.1()[1, 1]*input$num,0)),  # Implant
-        paste0(round(as.numeric(contentsTableDat.5()[6, 1])*contentsTableDat.1()[1, 1]*input$num,0)),  # Combined oral contraceptives
-        paste0(round(as.numeric(contentsTableDat.5()[7, 1])*contentsTableDat.1()[1, 1]*input$num,0)),  # Injectable contractptives
-        paste0(round(as.numeric(contentsTableDat.5()[8, 1])*contentsTableDat.1()[1, 1]*input$num,0)),  # IUD
+        paste0(round(as.numeric(contentsTableDat.5()[1, 1])*n2(),0)),                             # Sexually active men
+        paste0(round(as.numeric(contentsTableDat.5()[1, 1])*as.numeric(contentsTableDat.5()[2, 1])*n2(),0)),  # Sexually active men who use condoms
+        paste0(round(as.numeric(contentsTableDat.5()[3, 1])*contentsTableDat.1()[1, 1]*n2(),0)),  # mPDS
+        paste0(round(as.numeric(contentsTableDat.5()[4, 1])*contentsTableDat.1()[1, 1]*n2(),0)),  # Female condoms
+        paste0(round(as.numeric(contentsTableDat.5()[5, 1])*contentsTableDat.1()[1, 1]*n2(),0)),  # Implant
+        paste0(round(as.numeric(contentsTableDat.5()[6, 1])*contentsTableDat.1()[1, 1]*n2(),0)),  # Combined oral contraceptives
+        paste0(round(as.numeric(contentsTableDat.5()[7, 1])*contentsTableDat.1()[1, 1]*n2(),0)),  # Injectable contractptives
+        paste0(round(as.numeric(contentsTableDat.5()[8, 1])*contentsTableDat.1()[1, 1]*n2(),0)),  # IUD
         paste0("-"),  # HIV
         paste0("-"),  # HIV/ART
-        paste0(round(as.numeric(contentsTableDat.5()[11,1])*contentsTableDat.1()[2, 1]*input$num,0)),  # People seeking care for STI syndroms
-        paste0(round(as.numeric(contentsTableDat.5()[12,1])*contentsTableDat.1()[1, 1]*input$num,0)),  # Sexual violence
+        paste0(round(as.numeric(contentsTableDat.5()[11,1])*contentsTableDat.1()[2, 1]*n2(),0)),  # People seeking care for STI syndroms
+        paste0(round(as.numeric(contentsTableDat.5()[12,1])*contentsTableDat.1()[1, 1]*n2(),0)),  # Sexual violence
         paste0("-"),                                                                       # Safe induced abortion rate
         paste0("-")),                                                                      # Abortion legislation
       
       rbind(
         paste0("-"),                             # Sexually active men
         paste0("-"),  # Sexually active men who use condoms
-        paste0(round(as.numeric(contentsTableDat.5()[3, 2])*contentsTableDat.1()[1, 2]*input$num,0)),  # mPDS
+        paste0(round(as.numeric(contentsTableDat.5()[3, 2])*contentsTableDat.1()[1, 2]*n2(),0)),  # mPDS
         paste0("-"),  # Female condoms
         paste0("-"),  # Implant
         paste0("-"),  # Combined oral contraceptives
         paste0("-"),  # Injectable contractptives
         paste0("-"),  # IUD
-        paste0(ifelse(is.na(round(as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 2]*input$num,2)), "-",  # HIV
-                       round(as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 2]*input$num,2))),
-        paste0(ifelse(is.na(round(as.numeric(contentsTableDat.5()[10,2])*as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 1]*input$num,0)), "-",  # HIV/ART
-                      round(as.numeric(contentsTableDat.5()[10,2])*as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 1]*input$num,0))),
+        paste0(ifelse(is.na(round(as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 2]*n2(),2)), "-",  # HIV
+                       round(as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 2]*n2(),2))),
+        paste0(ifelse(is.na(round(as.numeric(contentsTableDat.5()[10,2])*as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 1]*n2(),0)), "-",  # HIV/ART
+                      round(as.numeric(contentsTableDat.5()[10,2])*as.numeric(contentsTableDat.5()[9, 2])*contentsTableDat.1()[2, 1]*n2(),0))),
         paste0("-"),  # People seeking care for STI syndroms
         paste0("-"),  # Sexual violence
         paste0("-"),                                                                       # Safe induced abortion rate
@@ -568,121 +576,121 @@ shinyServer(function(input, output) {
         
         # Sexually active men  in population
         ifelse(contentsTableDat.5()[1, 3] != "-",
-               paste0(round(as.numeric(contentsTableDat.5()[1, 3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[1, 3])*n2(),0)),
                "-"), # otherwise no site-specific data is available
         
         # Sexually active men who use condoms
         ifelse(contentsTableDat.5()[1, 3] != "-" & contentsTableDat.5()[2, 3] != "-",                                        # if user has entered site-specific men of pop and condom use
-               paste0(round(as.numeric(contentsTableDat.5()[1, 3])*as.numeric(contentsTableDat.5()[2, 3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[1, 3])*as.numeric(contentsTableDat.5()[2, 3])*n2(),0)),
                
                ifelse((contentsTableDat.5()[1, 3] == "-" & contentsTableDat.5()[1, 3] == "") & contentsTableDat.5()[2, 3] != "-",   # if user has only entered site-specific condom use
-                      paste0(round(as.numeric(contentsTableDat.5()[1, 1])*as.numeric(contentsTableDat.5()[2, 3])*input$num,0)), 
+                      paste0(round(as.numeric(contentsTableDat.5()[1, 1])*as.numeric(contentsTableDat.5()[2, 3])*n2(),0)), 
                       "-")),         
         
         # mPDS               
         ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[3, 3] != "-",                        
-               paste0(round(as.numeric(contentsTableDat.5()[3, 3])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[3, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
                ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "") & contentsTableDat.5()[3, 3] != "-", 
-                      paste0(round(as.numeric(contentsTableDat.5()[3, 3])*as.numeric(contentsTableDat.1()[1,2])*input$num,0)),
+                      paste0(round(as.numeric(contentsTableDat.5()[3, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
                       ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[3, 3] == "-" & contentsTableDat.5()[3, 3] == ""), 
-                             paste0(round(as.numeric(contentsTableDat.5()[3, 2])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)), "-"))),      
+                             paste0(round(as.numeric(contentsTableDat.5()[3, 2])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),      
         
         # Female condoms
         ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[4, 3] != "-",                        
-               paste0(round(as.numeric(contentsTableDat.5()[4, 3])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[4, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
                ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "") & contentsTableDat.5()[4, 3] != "-", 
-                      paste0(round(as.numeric(contentsTableDat.5()[4, 3])*as.numeric(contentsTableDat.1()[1,2])*input$num,0)),
+                      paste0(round(as.numeric(contentsTableDat.5()[4, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
                       ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[4, 3] == "-" & contentsTableDat.5()[4, 3] == ""), 
-                             paste0(round(as.numeric(contentsTableDat.5()[4, 1])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)), "-"))),
+                             paste0(round(as.numeric(contentsTableDat.5()[4, 1])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),
         
         # Implant
         ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[5, 3] != "-",                        # if user has enter site-specific WRA
-               paste0(round(as.numeric(contentsTableDat.5()[5, 3])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[5, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
                ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] != "") & contentsTableDat.5()[5, 3] != "-", 
-                      paste0(round(as.numeric(contentsTableDat.5()[5, 3])*as.numeric(contentsTableDat.1()[1,2])*input$num,0)),
+                      paste0(round(as.numeric(contentsTableDat.5()[5, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
                       ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[5, 3] == "-" & contentsTableDat.5()[5, 3] != ""), 
-                             paste0(round(as.numeric(contentsTableDat.5()[5, 1])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)), "-"))),
+                             paste0(round(as.numeric(contentsTableDat.5()[5, 1])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),
         
         
         # Combined oral contraceptives
         ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[6, 3] != "-",                        # if user has enter site-specific WRA
-               paste0(round(as.numeric(contentsTableDat.5()[6, 3])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[6, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
                ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "-") & contentsTableDat.5()[6, 3] != "-", 
-                      paste0(round(as.numeric(contentsTableDat.5()[6, 3])*as.numeric(contentsTableDat.1()[1,2])*input$num,0)),
+                      paste0(round(as.numeric(contentsTableDat.5()[6, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
                       ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[6, 3] == "-" & contentsTableDat.5()[6, 3] == ""), 
-                             paste0(round(as.numeric(contentsTableDat.5()[6, 1])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)), "-"))),
+                             paste0(round(as.numeric(contentsTableDat.5()[6, 1])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),
         
         
         # Injectable contractptives
         ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[7, 3] != "-",                        # if user has enter site-specific WRA
-               paste0(round(as.numeric(contentsTableDat.5()[7, 3])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[7, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
                ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "") & contentsTableDat.5()[7, 3] != "-", 
-                      paste0(round(as.numeric(contentsTableDat.5()[7, 3])*as.numeric(contentsTableDat.1()[1,2])*input$num,0)),
+                      paste0(round(as.numeric(contentsTableDat.5()[7, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
                       ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[7, 3] == "-" & contentsTableDat.5()[7, 3] == ""), 
-                             paste0(round(as.numeric(contentsTableDat.5()[7, 1])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)), "-"))),
+                             paste0(round(as.numeric(contentsTableDat.5()[7, 1])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),
         
         # IUD
         ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[8, 3] != "-",                        # if user has enter site-specific WRA
-               paste0(round(as.numeric(contentsTableDat.5()[8, 3])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[8, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
                ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == " ") & contentsTableDat.5()[8, 3] != "-", 
-                      paste0(round(as.numeric(contentsTableDat.5()[8, 3])*as.numeric(contentsTableDat.1()[1,2])*input$num,0)),
+                      paste0(round(as.numeric(contentsTableDat.5()[8, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
                       ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[8, 3] == "-" & contentsTableDat.5()[8, 3] == ""), 
-                             paste0(round(as.numeric(contentsTableDat.5()[8, 1])*as.numeric(contentsTableDat.1()[1,3])*input$num,0)), "-"))),
+                             paste0(round(as.numeric(contentsTableDat.5()[8, 1])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),
         
         # HIV
         ifelse(contentsTableDat.1()[2, 3] != "-" & contentsTableDat.5()[9, 3] != "-",                       
-               paste0(round(as.numeric(contentsTableDat.5()[9, 3])*as.numeric(contentsTableDat.1()[2,3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[9, 3])*as.numeric(contentsTableDat.1()[2,3])*n2(),0)),
                
                ifelse((contentsTableDat.1()[2, 3] == "-" & contentsTableDat.1()[2, 3] == "") & contentsTableDat.5()[9, 3] != "-", 
-                      paste0(round(as.numeric(contentsTableDat.5()[9, 3])*as.numeric(contentsTableDat.1()[2,2])*input$num,0)),
+                      paste0(round(as.numeric(contentsTableDat.5()[9, 3])*as.numeric(contentsTableDat.1()[2,2])*n2(),0)),
                       
                       ifelse(contentsTableDat.1()[2, 3] != "-" & (contentsTableDat.5()[9, 3] == "-" & contentsTableDat.5()[9, 3] == ""), 
-                             paste0(round(as.numeric(contentsTableDat.5()[9, 2])*as.numeric(contentsTableDat.1()[2, 3])*input$num,0)),
+                             paste0(round(as.numeric(contentsTableDat.5()[9, 2])*as.numeric(contentsTableDat.1()[2, 3])*n2(),0)),
                              "-"))), 
         
         # HIV/ART
         ifelse(contentsTableDat.5()[10, 3] != "-" & contentsTableDat.1()[2, 3] != "-" & contentsTableDat.5()[9, 3] != "-",     # If the user has entered site-specific HIV prevalence and 18+
                paste0(round(as.numeric(contentsTableDat.5()[10,3])*as.numeric(contentsTableDat.5()[9, 3])*
-                              as.numeric(contentsTableDat.1()[2, 3])*input$num,0)), 
+                              as.numeric(contentsTableDat.1()[2, 3])*n2(),0)), 
                
                ifelse((contentsTableDat.5()[10, 3] == "-" & contentsTableDat.5()[10, 3] == "") & 
                         contentsTableDat.5()[9, 3] != "-" & contentsTableDat.1()[2, 3] != "-" ,    # user has only entered site specific 18+ but no site-specific HIV prevalence
                       paste0(round(as.numeric(contentsTableDat.5()[10,2])*as.numeric(contentsTableDat.5()[9, 3])*
-                                     as.numeric(contentsTableDat.1()[2, 3])*input$num,0)),
+                                     as.numeric(contentsTableDat.1()[2, 3])*n2(),0)),
                       
                       
                       ifelse((contentsTableDat.5()[10, 3] == "-" & contentsTableDat.5()[10, 3] == "") & 
                                (contentsTableDat.5()[9, 3] == "-"  & contentsTableDat.5()[9, 3] == "")& 
                                contentsTableDat.1()[2, 3] != "-" ,  # user has only entered site-specific HIV prevalence, but not 18+
                              paste0(round(as.numeric(contentsTableDat.5()[10,2])*as.numeric(contentsTableDat.5()[9, 2])*
-                                            as.numeric(contentsTableDat.1()[2, 3])*input$num,0)),
+                                            as.numeric(contentsTableDat.1()[2, 3])*n2(),0)),
                              
                              ifelse(contentsTableDat.5()[10, 3] != "-" & contentsTableDat.5()[9, 3] == "-" & contentsTableDat.1()[2, 3] != "-" , 
                                     paste0(round(as.numeric(contentsTableDat.5()[10,3])*as.numeric(contentsTableDat.5()[9, 2])*
-                                                   as.numeric(contentsTableDat.1()[2, 3])*input$num,0)),
+                                                   as.numeric(contentsTableDat.1()[2, 3])*n2(),0)),
                                     
                                     ifelse(contentsTableDat.5()[10, 3] != "-" & contentsTableDat.5()[9, 3] != "-" & 
                                              (contentsTableDat.1()[2, 3] == "-"  & contentsTableDat.1()[2, 3] == ""), 
                                            paste0(round(as.numeric(contentsTableDat.5()[10,3])*as.numeric(contentsTableDat.5()[9, 3])*
-                                                          as.numeric(contentsTableDat.1()[2, 2])*input$num,0)),
+                                                          as.numeric(contentsTableDat.1()[2, 2])*n2(),0)),
                                            
                                            ifelse(contentsTableDat.5()[10, 3] != "-" & 
                                                     (contentsTableDat.5()[9, 3] == "-" & contentsTableDat.5()[9, 3] == "") & 
                                                     (contentsTableDat.1()[2, 3] == "-" & contentsTableDat.1()[2, 3] == ""), 
                                                   paste0(round(as.numeric(contentsTableDat.5()[10,3])*as.numeric(contentsTableDat.5()[9, 2])*
-                                                                 as.numeric(contentsTableDat.1()[2, 2])*input$num,0)),
+                                                                 as.numeric(contentsTableDat.1()[2, 2])*n2(),0)),
                                                   
                                                   ifelse((contentsTableDat.5()[10, 3] == "-" & contentsTableDat.5()[10, 3] == "" )& 
                                                            (contentsTableDat.5()[9, 3] == "-"  & contentsTableDat.5()[9 , 3] == "" )& 
@@ -691,31 +699,31 @@ shinyServer(function(input, output) {
         
         # People seeking care for STI syndroms
         ifelse(contentsTableDat.1()[2, 3] != "-" & contentsTableDat.5()[11,3] != "-",                                                      
-               paste0(round(as.numeric(contentsTableDat.5()[11,3])*as.numeric(contentsTableDat.1()[2, 3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[11,3])*as.numeric(contentsTableDat.1()[2, 3])*n2(),0)),
                
                ifelse((contentsTableDat.1()[2, 3] == "-" & contentsTableDat.1()[2, 3] == "") & contentsTableDat.5()[11,3] != "-",
-                      paste0(round(as.numeric(contentsTableDat.5()[11,3])*as.numeric(contentsTableDat.1()[2, 2])*input$num,0)), 
+                      paste0(round(as.numeric(contentsTableDat.5()[11,3])*as.numeric(contentsTableDat.1()[2, 2])*n2(),0)), 
                       
                       ifelse(contentsTableDat.1()[2, 3] != "-" & (contentsTableDat.5()[11,3] == "-" & contentsTableDat.5()[11,3] == ""), 
-                             paste0(round(as.numeric(contentsTableDat.5()[11,1])*as.numeric(contentsTableDat.1()[2, 3])*input$num,0)), "-"))),     
+                             paste0(round(as.numeric(contentsTableDat.5()[11,1])*as.numeric(contentsTableDat.1()[2, 3])*n2(),0)), "-"))),     
         
         # Sexual violence
         ifelse(contentsTableDat.2()[1, 3] != "-" & contentsTableDat.5()[12,3] != "-",        
-               paste0(round(as.numeric(contentsTableDat.5()[12,3])*as.numeric(contentsTableDat.1()[1, 3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[12,3])*as.numeric(contentsTableDat.1()[1, 3])*n2(),0)),
                
                ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "") & contentsTableDat.5()[12,3] != "-",
-                      paste0(round(as.numeric(contentsTableDat.5()[12,3])*as.numeric(contentsTableDat.1()[1, 2])*input$num,0)), 
+                      paste0(round(as.numeric(contentsTableDat.5()[12,3])*as.numeric(contentsTableDat.1()[1, 2])*n2(),0)), 
                       
                       ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[12,3] == "-" & contentsTableDat.5()[12,3] == ""), 
-                             paste0(round(as.numeric(contentsTableDat.5()[12,1])*as.numeric(contentsTableDat.1()[1, 3])*input$num,0)), "-"))),     
+                             paste0(round(as.numeric(contentsTableDat.5()[12,1])*as.numeric(contentsTableDat.1()[1, 3])*n2(),0)), "-"))),     
         
         
         # Safe induced abortion rate
         ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[13,3] != "-",          
-               paste0(round(as.numeric(contentsTableDat.5()[13,3])*as.numeric(contentsTableDat.1()[1, 3])*input$num,0)),
+               paste0(round(as.numeric(contentsTableDat.5()[13,3])*as.numeric(contentsTableDat.1()[1, 3])*n2(),0)),
                
                ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "")  & contentsTableDat.5()[13,3] != "-",
-                      paste0(round(as.numeric(contentsTableDat.5()[13,3])*as.numeric(contentsTableDat.1()[1, 2])*input$num,0)), "-")),    
+                      paste0(round(as.numeric(contentsTableDat.5()[13,3])*as.numeric(contentsTableDat.1()[1, 2])*n2(),0)), "-")),    
         
         
         # Abortion legislation
@@ -738,9 +746,9 @@ shinyServer(function(input, output) {
     
     rhandsontable(output.table3, rowHeaderWidth = 450, 
                   colHeaders = c("Global constants", "Country data", "Site specific")) %>%
-      hot_col(3, width = 200, readOnly = TRUE, valign = "htCenter") %>%
-      hot_col(2, width = 200, readOnly = TRUE, valign = "htCenter") %>%
-      hot_col(1, width = 200, readOnly = TRUE, valign = "htCenter")
+      hot_col(3, width = 200, type= "numeric", format = "0,0", readOnly = TRUE, valign = "htCenter") %>%
+      hot_col(2, width = 200, type= "numeric", format = "0,0", readOnly = TRUE, valign = "htCenter") %>%
+      hot_col(1, width = 200, type= "numeric", format = "0,0", readOnly = TRUE, valign = "htCenter")
     
   })
   
@@ -840,7 +848,7 @@ shinyServer(function(input, output) {
       sheets <- list("Demographic Indicators" = a,
                      "Maternal and Newborn Health" = b,
                      "Sexual and Reproductive Health" = c)
-      write_xlsx(sheets, file)
+      write.xlsx(sheets, file, row.names = TRUE)
     }
   )
   
