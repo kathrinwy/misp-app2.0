@@ -588,23 +588,23 @@ shinyServer(function(input, output) {
                       "-")),         
         
         # mPDS               
-        ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[3, 3] != "-",                        
+        ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[3, 3] != "-",                        # if user has enter site-specific WRA
                paste0(round(as.numeric(contentsTableDat.5()[3, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
-               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "") & contentsTableDat.5()[3, 3] != "-", 
+               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] != "") & contentsTableDat.5()[3, 3] != "-", 
                       paste0(round(as.numeric(contentsTableDat.5()[3, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
-                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[3, 3] == "-" & contentsTableDat.5()[3, 3] == ""), 
-                             paste0(round(as.numeric(contentsTableDat.5()[3, 2])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),      
+                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[3, 3] == "-" & contentsTableDat.5()[3, 3] != ""), 
+                             paste0(round(as.numeric(contentsTableDat.5()[3, 1])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),     
         
         # Female condoms
-        ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[4, 3] != "-",                        
+        ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[4, 3] != "-",                        # if user has enter site-specific WRA
                paste0(round(as.numeric(contentsTableDat.5()[4, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
-               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "") & contentsTableDat.5()[4, 3] != "-", 
+               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] != "") & contentsTableDat.5()[4, 3] != "-", 
                       paste0(round(as.numeric(contentsTableDat.5()[4, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
-                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[4, 3] == "-" & contentsTableDat.5()[4, 3] == ""), 
+                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[4, 3] == "-" & contentsTableDat.5()[4, 3] != ""), 
                              paste0(round(as.numeric(contentsTableDat.5()[4, 1])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),
         
         # Implant
@@ -622,10 +622,10 @@ shinyServer(function(input, output) {
         ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[6, 3] != "-",                        # if user has enter site-specific WRA
                paste0(round(as.numeric(contentsTableDat.5()[6, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
-               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "-") & contentsTableDat.5()[6, 3] != "-", 
+               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] != "") & contentsTableDat.5()[6, 3] != "-", 
                       paste0(round(as.numeric(contentsTableDat.5()[6, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
-                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[6, 3] == "-" & contentsTableDat.5()[6, 3] == ""), 
+                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[6, 3] == "-" & contentsTableDat.5()[6, 3] != ""), 
                              paste0(round(as.numeric(contentsTableDat.5()[6, 1])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),
         
         
@@ -633,20 +633,21 @@ shinyServer(function(input, output) {
         ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[7, 3] != "-",                        # if user has enter site-specific WRA
                paste0(round(as.numeric(contentsTableDat.5()[7, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
-               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "") & contentsTableDat.5()[7, 3] != "-", 
+               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] != "") & contentsTableDat.5()[7, 3] != "-", 
                       paste0(round(as.numeric(contentsTableDat.5()[7, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
-                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[7, 3] == "-" & contentsTableDat.5()[7, 3] == ""), 
+                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[7, 3] == "-" & contentsTableDat.5()[7, 3] != ""), 
                              paste0(round(as.numeric(contentsTableDat.5()[7, 1])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),
+        
         
         # IUD
         ifelse(contentsTableDat.1()[1, 3] != "-" & contentsTableDat.5()[8, 3] != "-",                        # if user has enter site-specific WRA
                paste0(round(as.numeric(contentsTableDat.5()[8, 3])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)),
                
-               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == " ") & contentsTableDat.5()[8, 3] != "-", 
+               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] != "") & contentsTableDat.5()[8, 3] != "-", 
                       paste0(round(as.numeric(contentsTableDat.5()[8, 3])*as.numeric(contentsTableDat.1()[1,2])*n2(),0)),
                       
-                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[8, 3] == "-" & contentsTableDat.5()[8, 3] == ""), 
+                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[8, 3] == "-" & contentsTableDat.5()[8, 3] != ""), 
                              paste0(round(as.numeric(contentsTableDat.5()[8, 1])*as.numeric(contentsTableDat.1()[1,3])*n2(),0)), "-"))),
         
         # HIV
@@ -711,10 +712,10 @@ shinyServer(function(input, output) {
         ifelse(contentsTableDat.2()[1, 3] != "-" & contentsTableDat.5()[12,3] != "-",        
                paste0(round(as.numeric(contentsTableDat.5()[12,3])*as.numeric(contentsTableDat.1()[1, 3])*n2(),0)),
                
-               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] == "") & contentsTableDat.5()[12,3] != "-",
+               ifelse((contentsTableDat.1()[1, 3] == "-" & contentsTableDat.1()[1, 3] != "") & contentsTableDat.5()[12,3] != "-",
                       paste0(round(as.numeric(contentsTableDat.5()[12,3])*as.numeric(contentsTableDat.1()[1, 2])*n2(),0)), 
                       
-                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[12,3] == "-" & contentsTableDat.5()[12,3] == ""), 
+                      ifelse(contentsTableDat.1()[1, 3] != "-" & (contentsTableDat.5()[12,3] == "-" & contentsTableDat.5()[12,3] != ""), 
                              paste0(round(as.numeric(contentsTableDat.5()[12,1])*as.numeric(contentsTableDat.1()[1, 3])*n2(),0)), "-"))),     
         
         
